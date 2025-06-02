@@ -13,6 +13,15 @@ with st.sidebar:
     groq_api_key=st.text_input("Enter your GROQ API key:",value="",type="password")
     url=st.text_input("Enter the Youtube or website URL:",label_visibility="collapsed")
 
+llm=ChatGroq(model="TinyLlama-1.1B-Chat-v1.0",groq_api_key=groq_api_key)
+
+prompt_template="""
+Provide a summary of the following content in 300 words:
+Context:{text}
+"""
+
+prompt=PromptTemplate(template=prompt_template,input_variables=["text"])
+
 if st.button("Summarize the content from the website/youtube"):
     if not groq_api_key.strip() or not url.strip():
         st.error("Please provide the information to get started")
@@ -25,4 +34,7 @@ if st.button("Summarize the content from the website/youtube"):
                     loader=YoutubeLoader.from_youtube_url(url,add_video_info=True)
                 else:
                     loader=UnstructuredURLLoader(urls=[url],ssl_verify=False,headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHMIL, like Gecko) Chrome/116.0.0.0 Safari/537.36"})
-                    
+                
+                data=loader.load()
+
+                
