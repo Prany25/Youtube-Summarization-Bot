@@ -21,4 +21,8 @@ if st.button("Summarize the content from the website/youtube"):
     else:
         try:
             with st.spinner("Waiting..."):
-                
+                if "youtube.com" in url:
+                    loader=YoutubeLoader.from_youtube_url(url,add_video_info=True)
+                else:
+                    loader=UnstructuredURLLoader(urls=[url],ssl_verify=False,headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHMIL, like Gecko) Chrome/116.0.0.0 Safari/537.36"})
+                    
