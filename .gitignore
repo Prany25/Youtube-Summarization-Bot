@@ -1,2 +1,6 @@
 .env
 venv/
+Scripts/
+Lib/
+__pycache__
+get_pip.py
