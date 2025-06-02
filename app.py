@@ -35,6 +35,12 @@ if st.button("Summarize the content from the website/youtube"):
                 else:
                     loader=UnstructuredURLLoader(urls=[url],ssl_verify=False,headers={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 13_5_1) AppleWebKit/537.36 (KHMIL, like Gecko) Chrome/116.0.0.0 Safari/537.36"})
                 
-                data=loader.load()
+                docs=loader.load()
 
-                
+                chain=load_summarize_chain(llm,chain_type="stuff",prompt=prompt)
+                output_summary=chain.run(docs)
+
+                st.success(output_summary)
+        
+        except Exception as e:
+            st.Exception(f"Exception:{e}")
